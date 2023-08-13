@@ -1,0 +1,28 @@
+---
+applications:
+- name: isusrv
+  routes:
+    - route: node123456711.cfapps.eu10.hana.ondemand.com
+  path: myapp
+  memory: 128M
+  buildpack: nodejs_buildpack
+  services:
+  - XsuaaForApprouterConf
+  - dest_isuuser
+  - isu_connectivity
+
+- name: myApprouterConfigurationApp
+  host: myapprouterconfapp
+  path: approuter
+  memory: 128M
+  services:
+    - XsuaaForApprouterConf
+    - dest_isuuser
+  env:
+    destinations: >
+      [
+          {
+              "name": "env_destination_saphome",
+              "url": "https://node123456711.cfapps.eu10.hana.ondemand.com"
+          }
+      ]
